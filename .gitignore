@@ -1,0 +1,48 @@
+
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, coverage report, and fuzz output
+*.test
+*.out
+fuzz/
+
+# Output of the go coverage tool
+coverage.out
+
+# Temporary files and directories created by editors or tools
+*~
+*.swp
+.DS_Store
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Dependencies
+/vendor/
+Gopkg.lock
+go.sum
+
+# Go workspace file
+go.work
+go.work.sum
+
+# Log files
+*.log
+
+# IDE specific files
+*.iml
+
+# Env files
+.env
+
+# Cgo generated files
+*_cgo_*
+
+# Code generated files
+*.gen.go
