@@ -46,14 +46,16 @@ func (repo *PGRepository) GetAll() ([]Blog, error) {
 	return blogs, nil
 }
 
-func (*PGRepository) Update(id string, blog Blog) (shared.IdDTO, error) {
-	panic("unimplemented")
+func (repo *PGRepository) Update(id string, blog Blog) (shared.IdDTO, error) {
+	blog.ID = id
+	repo.db.Save(&blog)
+	return shared.IdDTO{ID: id}, nil
 }
 
 func (repo *PGRepository) GetById(id string) (Blog, error) {
 	var blog Blog
 
-	err := repo.db.First(&blog, id).Error
+	err := repo.db.First(&blog, Blog{ID: id}).Error
 	if err != nil {
 		return Blog{}, fmt.Errorf("error at GetById: %s", err.Error())
 	}

@@ -43,7 +43,7 @@ func (d *DB) Init() {
 
 	d.db = db
 
-	fmt.Println("[DATABASE] ready!", db)
+	fmt.Println("[DATABASE] ready!")
 }
 
 func initLogger() logger.Interface {
