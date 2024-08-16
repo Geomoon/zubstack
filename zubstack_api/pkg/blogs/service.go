@@ -1,6 +1,10 @@
 package blogs
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+	"zubstack_api/pkg/shared"
+)
 
 type Service struct {
 	mapper Mapper
@@ -21,8 +25,18 @@ func (serv *Service) GetAll() ([]GetBlogDTO, error) {
 	}
 
 	list := make([]GetBlogDTO, len(blogs))
-	for _, v := range blogs {
-		list = append(list, serv.mapper.toDTO(v))
+	for i, v := range blogs {
+		list[i] = serv.mapper.toDTO(v)
 	}
 	return list, nil
+}
+
+func (serv *Service) Create(blog CreateBlogDTO) (shared.IdDTO, error) {
+	entity := serv.mapper.toEntity(blog)
+	saved, err := serv.repo.Create(entity)
+	if err != nil {
+		return shared.IdDTO{}, fmt.Errorf("error at save blog: %s\n", err.Error())
+	}
+
+	return saved, nil
 }

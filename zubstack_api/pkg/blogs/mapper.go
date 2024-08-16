@@ -14,6 +14,15 @@ func (*Mapper) toDTO(blog Blog) GetBlogDTO {
 		Author:    blog.Author,
 		Votes:     blog.Votes,
 		Tags:      blog.Tags,
-		CreatedAt: *blog.CreatedAt,
+		CreatedAt: blog.CreatedAt,
+	}
+}
+
+func (*Mapper) toEntity(blog CreateBlogDTO) Blog {
+	return Blog{
+		Title:   blog.Title,
+		Content: blog.Content,
+		Author:  blog.Author,
+		Tags:    blog.Tags,
 	}
 }

@@ -1,7 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"zubstack_api/pkg/config"
+)
 
 func main() {
-	fmt.Println("Hellow world from Go!")
+	server := config.NewServer(":3010")
+	server.Run()
 }
