@@ -36,7 +36,7 @@ func (repo *PGRepository) Create(blog Blog) (shared.IdDTO, error) {
 func (repo *PGRepository) GetAll() ([]Blog, error) {
 	var blogs []Blog
 
-	err := repo.db.Table("blogs").Find(&blogs).Error
+	err := repo.db.Table("blogs").Order("created_at DESC").Find(&blogs).Error
 	if err != nil {
 		return []Blog{}, err
 	}

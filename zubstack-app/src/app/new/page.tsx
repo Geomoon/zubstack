@@ -1,3 +1,4 @@
+import { BlogForm } from "@/components/BlogForm";
 import { IoSend } from "react-icons/io5";
 
 export default function NewBlogPage() {
@@ -12,29 +13,7 @@ export default function NewBlogPage() {
         </p>
       </div>
 
-      <div className="flex flex-col lg:max-w-[50vw] w-full justify-center pt-4">
-        <input
-          type="text"
-          placeholder="Title"
-          className="text-3xl font-bold border-b-neutral-800 bg-transparent border-b py-2 focus:border-b-neutral-500"
-        />
-        <div className="flex flex-1 my-10">
-          <textarea
-            placeholder="Write content here..."
-            className="w-full min-h-72 resize-none p-4 rounded-lg border-neutral-800 bg-gradient-to-b from-zinc-200 backdrop-blur-2xl dark:bg-zinc-800/30 dark:from-inherit border focus:border-neutral-500"
-          />
-        </div>
-        <div className="flex flex-row justify-end">
-          <button
-            type="button"
-            className="py-2 px-4 rounded-md font-bold bg-blue-600 flex items-center space-x-2 hover:space-x-4"
-          >
-            <p>Post</p>
-            <IoSend />
-          </button>
-        </div>
-      </div>
-
+      <BlogForm />
       <div></div>
     </main>
   );

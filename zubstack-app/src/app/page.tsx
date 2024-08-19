@@ -1,7 +1,5 @@
 import { AddPostButton } from "@/components/AddPostButton";
-import { BlogItem } from "@/components/BlogItem";
-import Link from "next/link";
-import { BiSolidBookAdd } from "react-icons/bi";
+import { BlogsList } from "@/components/BlogsList";
 
 export default function Home() {
   return (
@@ -21,11 +19,7 @@ export default function Home() {
 
       <div className="flex w-full justify-center place-items-center pt-4">
         <div className="flex flex-row w-full justify-center">
-          <div className="flex flex-col space-y-4 py-20 ">
-            {[1, 2, 3, 4, 5].map((_, v) => (
-              <BlogItem key={v} />
-            ))}
-          </div>
+          <BlogsList />
         </div>
       </div>
     </main>
