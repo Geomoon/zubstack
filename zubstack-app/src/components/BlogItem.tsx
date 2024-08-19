@@ -37,7 +37,7 @@ export const BlogItem: FC<BlogItemProps> = () => {
             className="flex flex-row flex-wrap space-x-2 items-center font-mono text-center border border-neutral-800 px-2 py-1 rounded-full hover:text-white"
           >
             <IoMdArrowRoundUp />
-            <p className="text-center"> 45k </p>
+            <p className="text-center">45k</p>
           </button>
           <div className="items-center flex flex-1 justify-end ">
             <Link
