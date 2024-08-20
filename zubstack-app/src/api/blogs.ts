@@ -14,4 +14,8 @@ export const BlogsApi = {
     const response = await api.patch(`/blogs/${id}`);
     return response.data;
   },
+  onDelete: async (id: string): Promise<void> => {
+    const response = await api.delete(`/blogs/${id}`);
+    return response.data;
+  },
 };

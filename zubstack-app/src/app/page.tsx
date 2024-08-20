@@ -22,6 +22,8 @@ export default function Home() {
           <BlogsList />
         </div>
       </div>
+
+      <div></div>
     </main>
   );
 }

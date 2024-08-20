@@ -26,7 +26,7 @@ type PGRepository struct {
 }
 
 func (repo *PGRepository) Delete(id string) error {
-	return repo.db.Delete(&Blog{}, id).Error
+	return repo.db.Delete(&Blog{ID: id}).Error
 }
 
 func (repo *PGRepository) Create(blog Blog) (shared.IdDTO, error) {
@@ -45,9 +45,6 @@ func (repo *PGRepository) GetAll() ([]Blog, error) {
 	if err != nil {
 		return []Blog{}, err
 	}
-
-	fmt.Print(blogs)
-
 	return blogs, nil
 }
 

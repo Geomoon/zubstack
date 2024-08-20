@@ -3,13 +3,15 @@ import Link from "next/link";
 import { FC } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { IoMdArrowRoundUp } from "react-icons/io";
+import { RiDeleteBack2Fill } from "react-icons/ri";
 
 type BlogItemProps = {
   blog: GetBlog;
   onAddVote: (id: string) => void;
+  onDelete?: (id: string) => void;
 };
 
-export const BlogItem: FC<BlogItemProps> = ({ blog, onAddVote }) => {
+export const BlogItem: FC<BlogItemProps> = ({ blog, onAddVote, onDelete }) => {
   return (
     <div className="flex flex-row w-[60vw] space-x-2 border-neutral-800 p-5 border rounded-lg bg-gradient-to-b from-zinc-200 backdrop-blur-2xl dark:bg-zinc-800/30 dark:from-inherit ">
       <div>
@@ -38,6 +40,16 @@ export const BlogItem: FC<BlogItemProps> = ({ blog, onAddVote }) => {
             <p className="text-center">{blog.votes}</p>
             <IoMdArrowRoundUp />
           </button>
+          {onDelete && (
+            <button
+              onClick={() => onDelete(blog.id)}
+              type="button"
+              className="group flex hover:bg-red-700 text-sm flex-row flex-wrap hover:space-x-2 transition duration-300 items-center font-mono text-center border border-neutral-800 px-2 py-1 rounded-full hover:text-white"
+            >
+              <p className="group-hover:block hidden">DELETE</p>
+              <RiDeleteBack2Fill />
+            </button>
+          )}
           <div className="items-center flex flex-1 justify-end ">
             <Link
               href={`blog/${blog.id}`}
