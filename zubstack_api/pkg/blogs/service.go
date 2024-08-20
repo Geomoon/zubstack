@@ -65,3 +65,11 @@ func (serv *Service) AddVote(id string) (VotesDTO, error) {
 		Votes: blog.Votes,
 	}, nil
 }
+
+func (serv *Service) Delete(id string) error {
+	err := serv.repo.Delete(id)
+	if err != nil {
+		return errors.New("error at delete")
+	}
+	return nil
+}

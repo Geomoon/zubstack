@@ -78,3 +78,15 @@ func (h *Handlers) AddVote(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write(body)
 }
+
+func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
+	id := r.PathValue("id")
+
+	err := h.serv.Delete(id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
+}

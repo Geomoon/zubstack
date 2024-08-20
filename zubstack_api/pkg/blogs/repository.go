@@ -12,6 +12,7 @@ type Repository interface {
 	GetById(id string) (Blog, error)
 	Create(blog Blog) (shared.IdDTO, error)
 	Update(id string, blog Blog) (shared.IdDTO, error)
+	Delete(id string) error
 }
 
 func NewPGRepository(db *gorm.DB) Repository {
@@ -22,6 +23,10 @@ func NewPGRepository(db *gorm.DB) Repository {
 
 type PGRepository struct {
 	db *gorm.DB
+}
+
+func (repo *PGRepository) Delete(id string) error {
+	return repo.db.Delete(&Blog{}, id).Error
 }
 
 func (repo *PGRepository) Create(blog Blog) (shared.IdDTO, error) {
