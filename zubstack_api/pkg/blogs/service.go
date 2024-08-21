@@ -82,3 +82,21 @@ func (serv *Service) GetByTitleAndTags(title, tags string) []GetBlogSearchDTO {
 	}
 	return list
 }
+
+func (serv *Service) GetTags() []string {
+	tags, err := serv.repo.GetTags()
+	if err != nil {
+		fmt.Println(err.Error())
+		return []string{}
+	}
+
+	return tags
+}
+
+func (serv *Service) GetById(id string) (GetBlogDTO, error) {
+	blog, err := serv.repo.GetById(id)
+	if err != nil {
+		return GetBlogDTO{}, err
+	}
+	return serv.mapper.toDTO(blog), nil
+}

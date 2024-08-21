@@ -52,8 +52,8 @@ export const BlogItem: FC<BlogItemProps> = ({ blog, onAddVote, onDelete }) => {
           )}
           <div className="items-center flex flex-1 justify-end ">
             <Link
-              href={`blog/${blog.id}`}
-              className="flex flex-row space-x-4 items-center hover:space-x-6"
+              href={`/${blog.id}`}
+              className="flex flex-row gap-x-4 items-center hover:gap-x-6 duration-300 transition"
             >
               <p className="text-sm font-mono">READ MORE</p>
               <FaArrowRightLong />

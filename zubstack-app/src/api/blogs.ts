@@ -1,4 +1,4 @@
-import { CreateBlog, GetBlog, Id } from "@/models/blog";
+import { CreateBlog, GetBlog, Id, ResultBlogDTO } from "@/models/blog";
 import { api } from "./api";
 
 export const BlogsApi = {
@@ -16,6 +16,23 @@ export const BlogsApi = {
   },
   onDelete: async (id: string): Promise<void> => {
     const response = await api.delete(`/blogs/${id}`);
+    return response.data;
+  },
+  getByTitleAndTags: async (
+    title: string,
+    tags: string,
+  ): Promise<ResultBlogDTO[]> => {
+    const response = await api.get("/blogs/search", {
+      params: { title, tags },
+    });
+    return response.data;
+  },
+  getTags: async (): Promise<string[]> => {
+    const response = await api.get("/blogs/tags");
+    return response.data;
+  },
+  getById: async (id: string): Promise<GetBlog> => {
+    const response = await api.get(`/blogs/${id}`);
     return response.data;
   },
 };

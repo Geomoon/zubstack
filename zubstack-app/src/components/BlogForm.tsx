@@ -8,6 +8,7 @@ export const BlogForm: FC<{}> = () => {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [author, setAuthor] = useState<string>("");
+  const [tag, setTag] = useState<string>("");
   const [isTitleError, setIsTitleError] = useState(false);
   const [isContentError, setIsContentError] = useState(false);
   const [isAuthorError, setIsAuthorError] = useState(false);
@@ -21,14 +22,14 @@ export const BlogForm: FC<{}> = () => {
     if (title === "" || content === "" || author === "") return;
 
     trigger(
-      { title, content, tags: "tech", author },
+      { title, content, tags: tag !== "" ? tag : "note", author },
       {
         onSuccess: () => {
           window.location.href = "/";
         },
       },
     );
-  }, [author, content, title, trigger]);
+  }, [author, content, tag, title, trigger]);
 
   return (
     <div className="flex flex-col lg:max-w-[50vw] w-full justify-center pt-4">
@@ -41,6 +42,24 @@ export const BlogForm: FC<{}> = () => {
           isTitleError && "border-b-red-700"
         }`}
       />
+      <div className="flex">
+        <input
+          type="text"
+          placeholder="Tag"
+          value={tag}
+          onChange={(e) => setTag(e.target.value)}
+          className="flex-1 border-neutral-800 font-mono rounded-bl-md py-2 px-4 bg-gradient-to-b from-zinc-200 backdrop-blur-2xl dark:bg-zinc-800/30  dark:from-inherit"
+        />
+        <input
+          type="text"
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+          placeholder="Author"
+          className={`flex-1 border-neutral-800 font-mono border-l-neutral-900 border-l rounded-br-md py-2 px-4 bg-gradient-to-b from-zinc-200 backdrop-blur-2xl dark:bg-zinc-800/30  dark:from-inherit ${
+            isAuthorError && "border-b-red-700 border-b"
+          }`}
+        />
+      </div>
       <div className="flex flex-1 my-10">
         <textarea
           value={content}
@@ -52,17 +71,7 @@ export const BlogForm: FC<{}> = () => {
         />
       </div>
       <div className="flex flex-row justify-end">
-        <div className="flex-1 flex">
-          <input
-            type="text"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            placeholder="Author"
-            className={`bg-transparent border-b-neutral-800 border-b ${
-              isAuthorError && "border-b-red-700"
-            }`}
-          />
-        </div>
+        <div className="flex-1 flex"></div>
         <button
           type="button"
           onClick={submit}

@@ -101,6 +101,40 @@ func (h *Handlers) GetByTitleAndTags(w http.ResponseWriter, r *http.Request) {
 	body, err := json.Marshal(blogs)
 	if err != nil {
 		http.Error(w, "error at encode data", http.StatusBadRequest)
+		return
+	}
+
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(body)
+}
+
+func (h *Handlers) GetTags(w http.ResponseWriter, r *http.Request) {
+	tags := h.serv.GetTags()
+
+	body, err := json.Marshal(tags)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(body)
+}
+
+func (h *Handlers) GetById(w http.ResponseWriter, r *http.Request) {
+	id := r.PathValue("id")
+	blog, err := h.serv.GetById(id)
+	if err != nil {
+		http.Error(w, "error at GetById", http.StatusBadRequest)
+		return
+	}
+
+	body, err := json.Marshal(blog)
+	if err != nil {
+		http.Error(w, "error at encode", http.StatusBadRequest)
+		return
 	}
 
 	w.Header().Add("Content-Type", "application/json")

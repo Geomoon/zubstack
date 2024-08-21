@@ -1,6 +1,7 @@
 package blogs
 
 import (
+	"errors"
 	"fmt"
 	"zubstack_api/pkg/shared"
 
@@ -14,6 +15,7 @@ type Repository interface {
 	Update(id string, blog Blog) (shared.IdDTO, error)
 	Delete(id string) error
 	FindByTitleAndTags(title, tags string) []Blog
+	GetTags() ([]string, error)
 }
 
 func NewPGRepository(db *gorm.DB) Repository {
@@ -24,6 +26,17 @@ func NewPGRepository(db *gorm.DB) Repository {
 
 type PGRepository struct {
 	db *gorm.DB
+}
+
+func (repo *PGRepository) GetTags() ([]string, error) {
+	var tags []string
+	err := repo.db.Raw(` select distinct blog_tags from blogs order by 1 `).Scan(&tags).Error
+	if err != nil {
+		fmt.Printf("error at GetTags: %s", err.Error())
+		return nil, errors.New("error at GetTags")
+	}
+
+	return tags, nil
 }
 
 func (repo *PGRepository) Delete(id string) error {
@@ -67,6 +80,7 @@ func (repo *PGRepository) FindByTitleAndTags(title, tags string) []Blog {
 	err := repo.db.
 		Table("blogs").
 		Where("upper(blog_title) like upper(?) and upper(blog_tags) like upper(?)", fmt.Sprintf("%%%s%%", title), fmt.Sprintf("%%%s%%", tags)).
+		Limit(6).
 		Find(&blogs).
 		Error
 	if err != nil {
