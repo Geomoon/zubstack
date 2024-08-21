@@ -22,3 +22,9 @@ type CreateBlogDTO struct {
 type VotesDTO struct {
 	Votes int32 `json:"votes"`
 }
+
+type GetBlogSearchDTO struct {
+	ID    string `json:"id"`
+	Title string `json:"title"`
+	Tags  string `json:"tags"`
+}

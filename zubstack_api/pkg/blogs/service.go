@@ -73,3 +73,12 @@ func (serv *Service) Delete(id string) error {
 	}
 	return nil
 }
+
+func (serv *Service) GetByTitleAndTags(title, tags string) []GetBlogSearchDTO {
+	blogs := serv.repo.FindByTitleAndTags(title, tags)
+	var list []GetBlogSearchDTO
+	for _, e := range blogs {
+		list = append(list, serv.mapper.toSearchDTO(e))
+	}
+	return list
+}

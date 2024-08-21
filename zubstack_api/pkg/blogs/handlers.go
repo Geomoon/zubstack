@@ -90,3 +90,20 @@ func (h *Handlers) Delete(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusNoContent)
 }
+
+func (h *Handlers) GetByTitleAndTags(w http.ResponseWriter, r *http.Request) {
+	params := r.URL.Query()
+
+	title := params.Get("title")
+	tags := params.Get("tags")
+
+	blogs := h.serv.GetByTitleAndTags(title, tags)
+	body, err := json.Marshal(blogs)
+	if err != nil {
+		http.Error(w, "error at encode data", http.StatusBadRequest)
+	}
+
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(body)
+}

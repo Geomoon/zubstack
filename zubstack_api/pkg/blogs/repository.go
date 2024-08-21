@@ -13,6 +13,7 @@ type Repository interface {
 	Create(blog Blog) (shared.IdDTO, error)
 	Update(id string, blog Blog) (shared.IdDTO, error)
 	Delete(id string) error
+	FindByTitleAndTags(title, tags string) []Blog
 }
 
 func NewPGRepository(db *gorm.DB) Repository {
@@ -34,13 +35,11 @@ func (repo *PGRepository) Create(blog Blog) (shared.IdDTO, error) {
 	if err != nil {
 		return shared.IdDTO{}, err
 	}
-
 	return shared.IdDTO{}, nil
 }
 
 func (repo *PGRepository) GetAll() ([]Blog, error) {
 	var blogs []Blog
-
 	err := repo.db.Table("blogs").Order("created_at DESC").Find(&blogs).Error
 	if err != nil {
 		return []Blog{}, err
@@ -56,11 +55,24 @@ func (repo *PGRepository) Update(id string, blog Blog) (shared.IdDTO, error) {
 
 func (repo *PGRepository) GetById(id string) (Blog, error) {
 	var blog Blog
-
 	err := repo.db.First(&blog, Blog{ID: id}).Error
 	if err != nil {
 		return Blog{}, fmt.Errorf("error at GetById: %s", err.Error())
 	}
-
 	return blog, nil
+}
+
+func (repo *PGRepository) FindByTitleAndTags(title, tags string) []Blog {
+	var blogs []Blog
+	err := repo.db.
+		Table("blogs").
+		Where("upper(blog_title) like upper(?) and upper(blog_tags) like upper(?)", fmt.Sprintf("%%%s%%", title), fmt.Sprintf("%%%s%%", tags)).
+		Find(&blogs).
+		Error
+	if err != nil {
+		fmt.Printf("error FindByTitleAndTags: %s", err.Error())
+		return []Blog{}
+	}
+
+	return blogs
 }

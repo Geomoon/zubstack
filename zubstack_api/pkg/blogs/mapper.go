@@ -18,3 +18,11 @@ func (*Mapper) toEntity(blog CreateBlogDTO) Blog {
 		Tags:    blog.Tags,
 	}
 }
+
+func (*Mapper) toSearchDTO(blog Blog) GetBlogSearchDTO {
+	return GetBlogSearchDTO{
+		ID:    blog.ID,
+		Title: blog.Title,
+		Tags:  blog.Tags,
+	}
+}
