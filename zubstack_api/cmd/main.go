@@ -1,7 +1,7 @@
 package main
 
 import (
-	"log"
+	"fmt"
 	"zubstack_api/pkg/config"
 
 	"github.com/joho/godotenv"
@@ -10,7 +10,7 @@ import (
 func main() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("error loading .env")
+		fmt.Println("error loading .env")
 	}
 
 	server := config.NewServer(":3010")
