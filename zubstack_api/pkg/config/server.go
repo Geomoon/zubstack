@@ -3,6 +3,8 @@ package config
 import (
 	"fmt"
 	"net/http"
+	"os"
+	"strconv"
 	"zubstack_api/pkg/blogs"
 )
 
@@ -18,7 +20,14 @@ func NewServer(port string) *Server {
 
 func (s *Server) Run() {
 	router := http.NewServeMux()
-	db := NewDB("localhost", "postgres", "postgres", "zubstack_db", 5433)
+
+	host := os.Getenv("DB_HOST")
+	port, _ := strconv.Atoi(os.Getenv("DB_PORT"))
+	user := os.Getenv("DB_USER")
+	password := os.Getenv("DB_PASSWORD")
+	dbName := os.Getenv("DB_NAME")
+
+	db := NewDB(host, user, password, dbName, port)
 	db.Init()
 
 	repo := blogs.NewPGRepository(db.db)
