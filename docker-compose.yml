@@ -41,12 +41,15 @@ services:
     build:
       context: ./zubstack-app/
       dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_API_URL=http://35.239.188.155:3010/api
     networks:
       - zubstack-net
     ports:
       - "3000:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=http://api:3010/api
+      - NEXT_PUBLIC_API_URL=http://35.239.188.155:3010/api
+    command: sh -c "while ! nc -z api 3010; do sleep 1; done && npm start"
 
 networks:
   zubstack-net:
