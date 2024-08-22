@@ -1,0 +1,55 @@
+services:
+  db:
+    restart: always
+    container_name: za-zubstack-db
+    build:
+      context: ./db/
+      dockerfile: Dockerfile
+    networks:
+      - zubstack-net
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgres/data
+
+  api:
+    restart: always
+    container_name: za-zubstack-api
+    depends_on:
+      - db
+    build:
+      context: ./zubstack_api/
+      dockerfile: Dockerfile
+    networks:
+      - zubstack-net
+    ports:
+      - "3010:3010"
+    environment:
+      - DB_NAME=zubstack_db
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_PORT=5432
+      - DB_HOST=db
+
+  app:
+    container_name: za-zubstack-app
+    depends_on:
+      - api
+    build:
+      context: ./zubstack-app/
+      dockerfile: Dockerfile
+    networks:
+      - zubstack-net
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://api:3010/api
+
+networks:
+  zubstack-net:
+
+volumes:
+  pgdata:
